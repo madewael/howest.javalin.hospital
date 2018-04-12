@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+	<meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>HoWest Hospital</title>
+</head>
+<body>
+    <div class="page-header">
+        <h1>HoWest Hospital</small></h1>
+      
+        <div class="dropdown" id="user_profile">
+            <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                <span class="glyphicon glyphicon-user" aria-hidden="true"></span> Profile
+                <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" id="user_roles">
+            </ul>
+        </div>
+    </div>
+    
+    
+    <div class="container">   
+        <div class="row">
+            <div class="col-sm-2">
+                <ul class="nav nav-pills nav-stacked">
+                    <li role="presentation" onClick="showAppointments()"><a href="#">Appointments</a></li>
+                    <li role="presentation" onClick="showPatients()"><a href="#">Patients</a></li>
+                    <li role="presentation" onClick="showDoctors()"><a href="#">Doctors</a></li>
+                </ul>
+            </div>
+            <div class="col-sm-6">
+          Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto.    
+            </div>
+        </div>
+    </div>
+    
+    
+	<script src='./assets/lib/jquery-3.3.1.min.js'></script>
+	<script src='./assets/lib/bootstrap.min.js'></script>
+    <script src='./assets/js/user_profile.js'></script>
+    <script src='./assets/js/admin.js'></script>
+    <link rel='stylesheet' media='screen' href='./assets/css/bootstrap.min.css' />
+    <link rel='stylesheet' href='./assets/css/normalize.css' />
+    <link rel='stylesheet' href='./assets/css/user_profile.css' />
+</body>
+</html>
