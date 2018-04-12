@@ -7,25 +7,35 @@ function init() {
     /* TODO fetch user id (or give as arg of redirect) => _USER_ID */
     
     addRoles(_USER_ID, _CURRENT_ROLE);
-    showProfile();
+    
+    let $profile = document.getElementById("profile");
+    let $appointments = document.getElementById("appointments");
+    let $appointmentDetails = document.getElementById("appointment-details");
+    
+    $appointments.style.visibility = "hidden";
+    $appointmentDetails.style.visibility = "hidden";
+    $profile.style.visibility = "visible";
 }
 
 function showProfile() {
     let $profile = document.getElementById("profile");
     let $appointments = document.getElementById("appointments");
+    let $appointmentDetails = document.getElementById("appointment-details");
     
     $appointments.style.visibility = "hidden";
+    $appointmentDetails.style.visibility = "hidden";
     $profile.style.visibility = "visible";
 }
 
 
-function showAppointments() {
-    searchAppointmentsOfUser(_USER_ID);
+function appointmentsPage() {
     let $profile = document.getElementById("profile");
-    let $appointments = document.getElementById("appointments");
-    
     $profile.style.visibility = "hidden";
-    $appointments.style.visibility = "visible";
+    showAppointments();
+    searchAppointmentsOfUser(_USER_ID, _CURRENT_ROLE);
 }
+
+
+
 
 document.addEventListener("DOMContentLoaded", init);
