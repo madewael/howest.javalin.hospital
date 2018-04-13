@@ -18,6 +18,25 @@ function _makeDate(val) {
     return $date;
 }
 
+function _makeTextarea(id, label, value) {
+    let $div = document.createElement("div");
+    $div.setAttribute("class", "input-group");
+    let $groupPrepend = document.createElement("div");
+    $groupPrepend.setAttribute("class", "input-group-prepend");
+    let $span = document.createElement("span");
+    $span.setAttribute("class", "input-group-text");
+    $span.appendChild(document.createTextNode(label));
+    $groupPrepend.appendChild($span);
+    let $textarea = document.createElement("textarea");
+    $textarea.setAttribute("class", "form-control");
+    $textarea.setAttribute("aria-label", label);
+    $textarea.setAttribute("id", id);
+    if (value) { $textarea.appendChild(document.createTextNode(value)); }
+    $div.appendChild($groupPrepend);
+    $div.appendChild($textarea);
+    return $div;
+}
+
 function _makeTextElement(type, val) {
     let $elem = document.createElement(type);
     $elem.appendChild(document.createTextNode(val)); 
@@ -34,7 +53,6 @@ function _appendChildren(elem, children) {
     })
     return children;
 }
-
 
 function _setChildren(elem, children) {
     _clearElement(elem);
