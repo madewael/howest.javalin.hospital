@@ -18,14 +18,14 @@ let _DOCTORS = [
 function filterDoctors() {
     let $doctorsList = document.getElementById("doctors-list");
     
-    let name = document.getElementById("inputDoctorsName").value;
+    let name = document.getElementById("input-doctors-name").value;
     let doctorsPromise = Promise.resolve(_DOCTORS); /* TODO rest call to retrieve all doctors */
     doctorsPromise.then((doctors) => {
         let matches = doctors.filter(doctors => doctors.name.includes(name));
  
         matches.forEach((doctor) => {
             let onClick = function() {  
-                $('#doctorsModal').modal('hide');
+                $('#doctors-modal').modal('hide');
                 let $doctorsName = document.getElementById("doctors-name");
                 $doctorsName.value = doctor.name;
              }

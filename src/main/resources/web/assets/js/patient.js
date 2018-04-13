@@ -42,6 +42,11 @@ function appointmentsPage() {
 }
 
 
+function createNewAppointment() {
+    addNewAppointment(_USER_ID, _CURRENT_ROLE);
+}
+
+
 
 
 document.addEventListener("DOMContentLoaded", init);

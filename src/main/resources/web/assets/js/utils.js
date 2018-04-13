@@ -1,8 +1,14 @@
 "use strict";
 
-function _makeTableCell(val) {
+function _makeTextTableCell(val) {
     let $td = document.createElement("td");
     $td.appendChild(document.createTextNode(val));
+    return $td;
+}
+
+function _makeTableCell(elem) {
+    let $td = document.createElement("td");
+    $td.appendChild(elem);
     return $td;
 }
 
