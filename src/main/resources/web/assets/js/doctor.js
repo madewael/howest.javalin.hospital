@@ -11,8 +11,11 @@ function init() {
     
     let $appointments = document.getElementById("appointments");
     let $appointmentDetails = document.getElementById("appointment-details");
+    let $newAppointment = document.getElementById("new-appointment");
+     
     $appointments.style.visibility = "hidden";
     $appointmentDetails.style.visibility = "hidden";
+    $newAppointment.style.visibility = 'hidden';
 }
 
 

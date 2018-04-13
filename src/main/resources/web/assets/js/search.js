@@ -1,24 +1,40 @@
 "use strict";
 
-let _USER_ID = 42;  
+let _DOCTORS = [
+    {
+        id: 'doctor1',
+        name: 'zorro',
+        specialty: 'heart'
+    },
+    {
+        id: 'doctor2',
+        name: 'yves',
+        specialty: 'neuro'
+    }
+]
 
-function addRoles(currentRole) {
-    /* TODO fetch user id (or give as arg of redirect) => _USER_ID */
+
+
+function filterDoctors() {
+    let $doctorsList = document.getElementById("doctors-list");
     
-    let rolesPromise = Promise.resolve(["doctor", "patient"]); /* TODO: REST call to retrieve the roles for the given userId */
-    rolesPromise.then((roles) => {
-        let $user_roles = document.getElementById('user_roles');
-        roles.forEach((role) => {
-            if (role !== currentRole) {
-                let $li = document.createElement("li");                 
-                let $a = document.createElement("a");
-                let $txt = document.createTextNode(role); 
-                $a.appendChild($txt);
-                $a.setAttribute("href", "#");
-                $li.appendChild($a);
-                $user_roles.appendChild($li);
-            }
+    let name = document.getElementById("inputDoctorsName").value;
+    let doctorsPromise = Promise.resolve(_DOCTORS); /* TODO rest call to retrieve all doctors */
+    doctorsPromise.then((doctors) => {
+        let matches = doctors.filter(doctors => doctors.name.includes(name));
+ 
+        matches.forEach((doctor) => {
+            let onClick = function() {  
+                $('#doctorsModal').modal('hide');
+                let $doctorsName = document.getElementById("doctors-name");
+                $doctorsName.value = doctor.name;
+             }
+            
+            let $li = _makeClickableListGroupItem(doctor.name, onClick);
+            _setChildren($doctorsList, [$li]);
         })
     })
 }
+
+
 
