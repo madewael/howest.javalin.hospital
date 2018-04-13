@@ -25,51 +25,135 @@
             <div class="col-sm-2">
                 <ul class="nav nav-pills nav-stacked">
                     <li role="presentation" onClick="appointmentsPage()"><a href="#">Appointments</a></li>
-                    <li role="presentation" onClick="showPatients()"><a href="#">Patients</a></li>
-                    <li role="presentation" onClick="showDoctors()"><a href="#">Doctors</a></li>
+                    <li role="presentation" onClick="doctorsPage()"><a href="#">Doctors</a></li>
+                    <li role="presentation" onClick="patientsPage()"><a href="#">Patients</a></li>
                 </ul>
             </div>
-            <div class="col-sm-6">
+            
+            <div class="col-sm-8" id="patients" visibility="visible">
+                Patients page
+            </div>
+            
+            <div class="col-sm-8" id="doctors" visibility="visible">
+                Doctors page
+            </div>
+            
+            <div class="col-sm-8" id="appointments" visibility="hidden">
+                <button type="button" class="btn btn-default" aria-label="Left Align" onClick="showNewAppointmentPage()">
+                  <span class="glyphicon glyphicon-plus" aria-hidden="true"> New appointment </span>
+                </button>
                 
-                <div class="col-sm-8" id="appointments" visibility="hidden">
-                    <button type="button" class="btn btn-default" aria-label="Left Align" onClick="showNewAppointmentPage()">
-                      <span class="glyphicon glyphicon-plus" aria-hidden="true"> New appointment </span>
-                    </button>
-                
-                	<div class="container">
-                        <table class="table">
-                          <thead>
-                            <tr>
-                              <th scope="col">Date</th>
-                              <th scope="col">Patient</th>
-                              <th scope="col">Doctor</th>
-                              <th scope="col"></th>
-                              <th scope="col"></th>
-                            </tr>
-                          </thead>
-                          <tbody id="appointment-list">
-                          </tbody>
-                      </table>
-                	</div>
-                    
-                    <div class="panel panel-default" id="new-appointment" visibility="hidden">
-                      <div class="panel-heading">
-                        <h3 class="panel-title">Create new appointment</h3>
-                      </div>
-                      <div class="panel-body" id="new-appointment-info">
-                          <div style="overflow:hidden;">
-                              <div class="form-group">
-                                  <div class="row">
-                                      <div class="col-md-8">
-                                          <div id="datetimepicker12"></div>
-                                      </div>
-                                  </div>
-                              </div>
-                          </div>
-                      </div>
-                    </div>
+                <div class="container" id="appointments" visibility="hidden">
+                    <table class="table">
+                      <thead>
+                        <tr>
+                          <th scope="col">Date</th>
+                          <th scope="col">Patient</th>
+                          <th scope="col">Doctor</th>
+                          <th scope="col"></th>
+                        </tr>
+                      </thead>
+                      <tbody id="appointment-list">
+                      </tbody>
+                  </table>
+                </div>            
+            
+                <div class="panel panel-default" id="appointment-details" visibility="hidden">
+                  <div class="panel-heading">
+                    <h3 class="panel-title">Appointment Details</h3>
+                  </div>
+                  <div class="panel-body" id="appointment-info">
+                  </div>
                 </div>
                 
+                <div class="panel panel-default" id="new-appointment" visibility="hidden">
+                  <div class="panel-heading">
+                    <h3 class="panel-title">Create new appointment</h3>
+                  </div>
+                  <div class="panel-body" id="new-appointment-info">
+                      <div style="overflow:hidden;">
+                          <div class="form-group">
+                              <div class="input-bar">
+                                  <div class="input-bar-item width100">
+                                      <form>
+                                          <div class="input-group">
+                                              <input class="form-control width100" type="text" id="doctors-name" placeholder="Doctor ..." readonly>
+                                              <span class="input-group-btn">
+                                                  <button type="button" class="btn btn-default" data-toggle="modal" data-target="#doctors-modal">
+                                                      <span class="glyphicon glyphicon-search" aria-hidden="true"> Search doctor </span>
+                                                  </button>
+                                              </span>
+                                          </div>
+                                      </form>
+                                  </div>
+                              </div>
+
+                              <!-- Modal -->
+                              <div class="modal fade" id="doctors-modal" tabindex="-1" role="dialog" aria-labelledby="search-doctors-modal" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                  <div class="modal-content">
+                                    <div class="modal-header">
+                                      <h5 class="modal-title" id="search-doctors-modal">Search doctors</h5>
+                                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                      </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <input type="text" class="form-control" placeholder="" onkeyup="filterDoctors()" id="input-doctors-name">
+                                        <ul class="list-group" id="doctors-list">
+                                        </ul>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                              
+                              <div class="input-bar">
+                                  <div class="input-bar-item width100">
+                                      <form>
+                                          <div class="input-group">
+                                              <input class="form-control width100" type="text" id="patients-name" placeholder="Patient ..." readonly>
+                                              <span class="input-group-btn">
+                                                  <button type="button" class="btn btn-default" data-toggle="modal" data-target="#patients-modal">
+                                                      <span class="glyphicon glyphicon-search" aria-hidden="true"> Search patient </span>
+                                                  </button>
+                                              </span>
+                                          </div>
+                                      </form>
+                                  </div>
+                              </div>
+
+                              <!-- Modal -->
+                              <div class="modal fade" id="patients-modal" tabindex="-1" role="dialog" aria-labelledby="search-patients-modal" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                  <div class="modal-content">
+                                    <div class="modal-header">
+                                      <h5 class="modal-title" id="search-patients-modal">Search patients</h5>
+                                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                      </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <input type="text" class="form-control" placeholder="" onkeyup="filterPatients()" id="input-patients-name">
+                                        <ul class="list-group" id="patients-list">
+                                        </ul>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                              
+                              <div class="row">
+                                  <div class="col-md-8">
+                                      <div id="datetimepicker"></div>
+                                  </div>
+                              </div>
+                              
+                              <button type="button" class="btn btn-primary" aria-label="Left Align" onClick="createNewAppointment()">
+                                 Submit
+                              </button>
+                          </div>
+                      </div>
+                  </div>
+                </div>
             </div>
         </div>
     </div>
@@ -77,11 +161,17 @@
     
 	<script src='./assets/lib/jquery-3.3.1.min.js'></script>
 	<script src='./assets/lib/bootstrap.min.js'></script>
+    <script src="./assets/lib/moment.js"></script>
+    <script src="./assets/lib/transition.js"></script>
+    <script src="./assets/lib/collapse.js"></script>
+    <script src="./assets/lib/bootstrap-datetimepicker.min.js"></script>
     <script src='./assets/js/utils.js'></script>
     <script src='./assets/js/user_profile.js'></script>
     <script src='./assets/js/appointments.js'></script>
+    <script src='./assets/js/search.js'></script>
     <script src='./assets/js/admin.js'></script>
     <link rel='stylesheet' media='screen' href='./assets/css/bootstrap.min.css' />
+    <link rel='stylesheet' media='screen' href='./assets/css/bootstrap-datetimepicker.min.css' />
     <link rel='stylesheet' href='./assets/css/normalize.css' />
     <link rel='stylesheet' href='./assets/css/user_profile.css' />
 </body>

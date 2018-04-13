@@ -13,6 +13,25 @@ let _DOCTORS = [
     }
 ]
 
+let _PATIENTS = [
+    {
+        id: 'patient1',
+        name: 'Alice'
+    },
+    {
+        id: 'patient2',
+        name: 'Bob'
+    },
+    {
+        id: 'patient3',
+        name: 'Carol'
+    },
+    {
+        id: 'patient4',
+        name: 'Dave'
+    }
+]
+
 
 
 function filterDoctors() {
@@ -37,4 +56,24 @@ function filterDoctors() {
 }
 
 
+function filterPatients() {
+    let $patientsList = document.getElementById("patients-list");
+    
+    let name = document.getElementById("input-patients-name").value;
+    let patientsPromise = Promise.resolve(_PATIENTS); /* TODO rest call to retrieve all patients */
+    patientsPromise.then((patients) => {
+        let matches = patients.filter(patients => patients.name.includes(name));
+ 
+        matches.forEach((patient) => {
+            let onClick = function() {  
+                $('#patients-modal').modal('hide');
+                let $patientsName = document.getElementById("patients-name");
+                $patientsName.value = patient.name;
+             }
+            
+            let $li = _makeClickableListGroupItem(patient.name, onClick);
+            _setChildren($patientsList, [$li]);
+        })
+    })
+}
 

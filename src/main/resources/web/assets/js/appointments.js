@@ -226,6 +226,17 @@ function viewAppointment(id, userId, role) {
 }
 
 
+function removeAppointment(id, userId, role) {
+    delete _APPOINTMENTS_FULL[id];
+    let idx = _APPOINTMENTS.findIndex((app) => app.id === id);
+    if (idx !== -1) { 
+        _APPOINTMENTS.splice(idx,1);
+    }  // TODO remove appointment
+    showAppointments();
+    searchAppointmentsOfUser(_USER_ID, _CURRENT_ROLE);
+}
+
+
 /* userId is null in case of "admin" => show all appointments */
 function searchAppointmentsOfUser(userId, role) {
     let filtered = [];
@@ -252,6 +263,8 @@ function searchAppointmentsOfUser(userId, role) {
             let $view = _makeTableCell($viewButton);
             let $editButton = _makeClickableIconButton("glyphicon glyphicon-pencil", function() { editAppointment(appointment.id, userId, role) });
             let $edit = _makeTableCell($editButton);
+            let $removeButton = _makeClickableIconButton("glyphicon glyphicon-remove", function() { removeAppointment(appointment.id, userId, role) });
+            let $rmv = _makeTableCell($removeButton);
   
             let children = [$date];
             if (role === "patient") {
@@ -259,7 +272,7 @@ function searchAppointmentsOfUser(userId, role) {
             } else if (role === "doctor") {
                 children = children.concat([$patient, $view, $edit]);
             } else {
-                children = children.concat([$patient, $doctor, $view, $edit]);
+                children = children.concat([$patient, $doctor, $view, $rmv]);
             }
             _setChildren($row, children);
             _appendChildren($appointments, [$row]);
