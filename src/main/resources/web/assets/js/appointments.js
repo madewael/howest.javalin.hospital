@@ -1,105 +1,5 @@
 "use strict";
 
-let _PATIENT_NAME = "Carol";
-let _DOCTOR_NAME = "Zorro";
-let _APPOINTMENT_ID = 7;
-
-let _APPOINTMENTS = [
-    { 
-        id: "appointment1",
-        patient: "Alice",
-        doctor: "Zorro",
-        date: "7 May 2018"
-    },
-    { 
-        id: "appointment2",
-        patient: "Bob",
-        doctor: "Yves",
-        date: "19 June 2018"
-    },
-    { 
-        id: "appointment3",
-        patient: "Alice",
-        doctor: "Zoro",
-        date: "16 August 2018"
-    },
-    { 
-        id: "appointment4",
-        patient: "Carol",
-        doctor: "Zorro",
-        date: "16 June 2018"
-    },
-    { 
-        id: "appointment5",
-        patient: "Dave",
-        doctor: "Zorro",
-        date: "1 August 2018"
-    },
-    { 
-        id: "appointment6",
-        patient: "Carol",
-        doctor: "Yves",
-        date: "9 August 2018"
-    }
-]
-
-let _APPOINTMENTS_FULL = {
-    "appointment1" : {
-        id: "appointment1",
-        patient: "Alice",
-        doctor: "Zorro",
-        date: "7 May 2018",
-        description: "Back pain: scans",
-        issues: ["back"],
-        log: ""
-    },
-    "appointment2" : {
-        id: "appointment2",
-        patient: "Bob",
-        doctor: "Yves",
-        date: "19 June 2018",
-        description: "Cardiac problems",
-        issues: ["heart"],
-        log: ""
-    },
-    "appointment3" : {
-        id: "appointment3",
-        patient: "Alice",
-        doctor: "Zorro",
-        date: "16 August 2018",
-        description: "Follow up back pain scans",
-        issues: ["back"],
-        log: ""
-    },
-     "appointment4" : { 
-        id: "appointment4",
-        patient: "Carol",
-        doctor: "Zorro",
-        date: "16 June 2018",
-        description: "intake",
-        issues: ["back"],
-        log: ""
-    },
-     "appointment5" : { 
-        id: "appointment5",
-        patient: "Dave",
-        doctor: "Zorro",
-        date: "1 August 2018",
-        description: "",
-        issues: ["neuro"],
-        log: ""
-    },
-     "appointment6" : { 
-        id: "appointment6",
-        patient: "Carol",
-        doctor: "Yves",
-        date: "9 August 2018",
-        description: "follow-up consult",
-        issues: ["hernia"],
-        log: ""
-    }
-}
-
 
 function showNewAppointmentPage() {
     let $appointments = document.getElementById("appointments");
@@ -114,48 +14,38 @@ function showNewAppointmentPage() {
 }
 
 function addNewAppointment(userId, role) {
-    let id = "appointment" + _APPOINTMENT_ID;
-    _APPOINTMENT_ID++;
     let date = $('#datetimepicker').data("DateTimePicker").viewDate();
     let patientPromise;
     if (role === "patient") {
-        patientPromise = Promise.resolve(_PATIENT_NAME);  //TODO fetch
+        patientPromise = _getName(userId, role);
     } else {
         patientPromise = Promise.resolve(document.getElementById("patients-name").value);
     }
     let doctorPromise;
     if (role === "doctor") {
-        doctorPromise = Promise.resolve(_DOCTOR_NAME); //TODO fetch
+        doctorPromise = _getName(userId, role);
     } else {
         doctorPromise = Promise.resolve(document.getElementById("doctors-name").value);
     }
     Promise.all([patientPromise, doctorPromise]).then((values) => {
-        let shortAppointment = { 
-            id: id,
-            patient: values[0],
-            doctor: values[1],
-            date: date
-        };
-        let fullAppointment = JSON.parse(JSON.stringify(shortAppointment));
-        fullAppointment["description"] = "description"; //TODO
-        fullAppointment["issues"] = ["issues"]; //TODO
-        fullAppointment["log"] = "log"; //TODO
-    
-        _APPOINTMENTS.push(shortAppointment);
-        _APPOINTMENTS_FULL[id] = fullAppointment;
-        
-        showAppointments(); 
-        searchAppointmentsOfUser(userId, role);
+        let description = "description"; //TODO
+        let issues = ["issues"]; //TODO
+        let log = "log"; //TODO        
+        let appointmentPromise = _createAppointment(values[0], values[1], date, description, issues, log);
+        appointmentPromise.then((id) => {
+            showAppointments(); 
+            searchAppointmentsOfUser(userId, role);
+        });  // TODO show popup when appointment cannot be created
     })
 }
 
 
 function saveChangesToAppointment(id) {
     let $log = document.getElementById("appointmentdetails-log");
-    let appointmentPromise = Promise.resolve(_APPOINTMENTS_FULL[id]);  // TODO fetch appointment
+    let appointmentPromise = _getAppointment(id);
     appointmentPromise.then((appointment) => {
         appointment["log"] = $log.value;
-        // TODO store appointment
+        _updateAppointment(id, appointment);
     })
 }
 
@@ -194,7 +84,7 @@ function editAppointment(id, userId, role) {
 
 
 function viewAppointment(id, userId, role) {
-    let appointmentPromise = Promise.resolve(_APPOINTMENTS_FULL[id]);
+    let appointmentPromise = _getAppointment(id);
     
     let $appointments = document.getElementById("appointments");
     let $appointmentDetails = document.getElementById("appointment-details");
@@ -227,29 +117,17 @@ function viewAppointment(id, userId, role) {
 
 
 function removeAppointment(id, userId, role) {
-    delete _APPOINTMENTS_FULL[id];
-    let idx = _APPOINTMENTS.findIndex((app) => app.id === id);
-    if (idx !== -1) { 
-        _APPOINTMENTS.splice(idx,1);
-    }  // TODO remove appointment
-    showAppointments();
-    searchAppointmentsOfUser(_USER_ID, _CURRENT_ROLE);
+    let promise = _deleteAppointment(id);
+    promise.then((res) => {
+        showAppointments();
+        searchAppointmentsOfUser(_USER_ID, _CURRENT_ROLE);
+    })
 }
 
 
 /* userId is null in case of "admin" => show all appointments */
 function searchAppointmentsOfUser(userId, role) {
-    let filtered = [];
-    if (role === "patient") { 
-        filtered = _APPOINTMENTS.filter(a => a.patient === _PATIENT_NAME); 
-    } else if (role === "doctor") {
-        filtered = _APPOINTMENTS.filter(a => a.doctor === _DOCTOR_NAME); 
-    } else {
-        filtered = _APPOINTMENTS;
-    }
-    //TODO fetch correct appointments
-    let appointmentsPromise = Promise.resolve(filtered);
-    
+    let appointmentsPromise = _filterAppointments(userId, role);
     appointmentsPromise.then((appointments) => {
         let $appointments = document.getElementById("appointment-list");
         _clearElement($appointments);

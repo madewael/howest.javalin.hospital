@@ -1,6 +1,5 @@
 "use strict";
 
-let _USER_ID = 42;
 let _CURRENT_ROLE = "doctor";
 
 
@@ -21,7 +20,11 @@ function init() {
 
 function appointmentsPage() {
     let $patients = document.getElementById("patients");
+    let $pSearch = document.getElementById("patient-search");
+    let $pDetails = document.getElementById("patient-search-details");
     $patients.style.visibility = "hidden";
+    $pSearch.style.visibility = "hidden";
+    $pDetails.style.visibility = "hidden";
     
     showAppointments();
     searchAppointmentsOfUser(_USER_ID, _CURRENT_ROLE);
@@ -35,6 +38,8 @@ function createNewAppointment() {
 
 function patientsPage() {
     let $patients = document.getElementById("patients");
+    let $pSearch = document.getElementById("patient-search");
+    let $pDetails = document.getElementById("patient-search-details");
     let $appointments = document.getElementById("appointments");
     let $appointmentDetails = document.getElementById("appointment-details");
     let $newAppointment = document.getElementById("new-appointment");
@@ -43,6 +48,8 @@ function patientsPage() {
     $appointmentDetails.style.visibility = "hidden";
     $newAppointment.style.visibility = 'hidden';
     $patients.style.visibility = "visible";
+    $pSearch.style.visibility = "visible";
+    $pDetails.style.visibility = "hidden";
 }
 
 
