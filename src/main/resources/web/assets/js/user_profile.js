@@ -2,7 +2,7 @@
 
 
 function addRoles(userId, currentRole) {        
-    let rolesPromise = Promise.resolve(["doctor", "patient", "admin"]); /* TODO: REST call to retrieve the roles for the given userId */
+    let rolesPromise = _getRoles(userId);
     rolesPromise.then((roles) => {
         let $user_roles = document.getElementById('user_roles');
         roles.forEach((role) => {

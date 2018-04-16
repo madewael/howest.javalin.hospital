@@ -156,6 +156,11 @@ let _PATIENTS = [
 
 /* ========================================================================================== */
 
+function _getRoles(id) {
+    return Promise.resolve(["doctor", "patient", "admin"]);
+    
+}
+
 function _getUser(id, role) {
     let user = role ? ((role === "patient") ? _PATIENT : _DOCTOR) : _PATIENT;
     return Promise.resolve(user); 
