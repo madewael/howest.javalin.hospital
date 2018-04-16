@@ -7,15 +7,12 @@ function init() {
     
     addRoles(_USER_ID, _CURRENT_ROLE);
     
-    let $profile = document.getElementById("patient-profile");
     let $appointments = document.getElementById("appointments");
     let $appointmentDetails = document.getElementById("appointment-details");
     let $newAppointment = document.getElementById("new-appointment");
-    
     $appointments.style.visibility = "hidden";
     $appointmentDetails.style.visibility = "hidden";
     $newAppointment.style.visibility = 'hidden';
-    $profile.style.visibility = "visible";
     
     profilePage();
 }
