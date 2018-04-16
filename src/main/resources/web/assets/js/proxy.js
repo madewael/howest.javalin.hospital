@@ -156,6 +156,10 @@ let _PATIENTS = [
 
 /* ========================================================================================== */
 
+function _login(username, password) {
+    return Promise.resolve(42);  
+}
+
 function _getRoles(id) {
     return Promise.resolve(["doctor", "patient", "admin"]);
     

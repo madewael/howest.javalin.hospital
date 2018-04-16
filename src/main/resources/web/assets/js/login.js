@@ -7,7 +7,10 @@
 function checkPassword() {
     let $username = document.getElementById('username');
     let $password = document.getElementById('password'); 
-    return Promise.resolve(42);  /* TODO make REST call and set userId to correct value */
+    let promise = _login($username.value, $password.value);
+    promise.then((userId) => {
+        // TODO userId must be passed when redirecting html
+    })
 }
 
 
@@ -16,12 +19,12 @@ function login() {
     
     userIdPromise.then((userId) => {
         if (userId) {
-            let rolesPromise = Promise.resolve(["patient"]); /* TODO: REST call to retrieve the roles for the given userId */
+            let rolesPromise = _getRoles(userId);
             rolesPromise.then((roles) => {
                 let initialRole = roles[0];
                 let nextHtml = initialRole + ".html";
         
-                document.location.href = nextHtml;   /* TODO: REST call to switch to next page */
+                document.location.href = nextHtml;   /* TODO: REST call to switch to next page  -- pass current role and userId */
             })
         }
         else {
