@@ -12,7 +12,9 @@ let _PATIENT = {
     dateOfBirth: '19 april 1976',
     placeOfBirth: 'Brugge',
     address: 'address',
-    phone: '797284'
+    phone: '797284',
+    parents: [], // default []
+    children: [] // default []
 }
 
 let _DOCTOR = {
@@ -71,7 +73,6 @@ let _APPOINTMENTS_FULL = {
         doctor: "Zorro",
         date: "7 May 2018",
         description: "Back pain: scans",
-        issues: ["back"],
         log: ""
     },
     "appointment2" : {
@@ -80,7 +81,6 @@ let _APPOINTMENTS_FULL = {
         doctor: "Yves",
         date: "19 June 2018",
         description: "Cardiac problems",
-        issues: ["heart"],
         log: ""
     },
     "appointment3" : {
@@ -89,7 +89,6 @@ let _APPOINTMENTS_FULL = {
         doctor: "Zorro",
         date: "16 August 2018",
         description: "Follow up back pain scans",
-        issues: ["back"],
         log: ""
     },
      "appointment4" : { 
@@ -98,7 +97,6 @@ let _APPOINTMENTS_FULL = {
         doctor: "Zorro",
         date: "16 June 2018",
         description: "intake",
-        issues: ["back"],
         log: ""
     },
      "appointment5" : { 
@@ -107,7 +105,6 @@ let _APPOINTMENTS_FULL = {
         doctor: "Zorro",
         date: "1 August 2018",
         description: "",
-        issues: ["neuro"],
         log: ""
     },
      "appointment6" : { 
@@ -116,7 +113,6 @@ let _APPOINTMENTS_FULL = {
         doctor: "Yves",
         date: "9 August 2018",
         description: "follow-up consult",
-        issues: ["hernia"],
         log: ""
     }
 }
@@ -180,8 +176,16 @@ function _getName(id, role) {
 function _createPatient(name, sec, dob, pob, address, phone) {
     let id = "user" + _USER_ID;  //TODO 
     _USER_ID++;
+    /* set parents & children = [] by default */
     return Promise.resolve(id);
     // TODO when user cannot be created
+}
+
+function _addParent(id, pId) {
+    let promise = _getUser(id);
+    promise.then((user) => {
+        user.parents = user.parents.concat([{id: pId, name: user.name}]);
+    })
 }
 
 
@@ -189,7 +193,7 @@ function _getAppointment(id) {
     return Promise.resolve(_APPOINTMENTS_FULL[id]); 
 }
 
-function _createAppointment(patient, doctor, date, description, issues, log) {
+function _createAppointment(patient, doctor, date, description, log) {
     let id = "appointment" + _APPOINTMENT_ID;  //TODO 
     _APPOINTMENT_ID++;
     let shortAppointment = { 
@@ -200,7 +204,6 @@ function _createAppointment(patient, doctor, date, description, issues, log) {
     };
     let fullAppointment = JSON.parse(JSON.stringify(shortAppointment));
     fullAppointment["description"] = description;
-    fullAppointment["issues"] = issues;
     fullAppointment["log"] = log;
 
     _APPOINTMENTS.push(shortAppointment);

@@ -29,9 +29,8 @@ function addNewAppointment(userId, role) {
     }
     Promise.all([patientPromise, doctorPromise]).then((values) => {
         let description = "description"; //TODO
-        let issues = ["issues"]; //TODO
         let log = "log"; //TODO        
-        let appointmentPromise = _createAppointment(values[0], values[1], date, description, issues, log);
+        let appointmentPromise = _createAppointment(values[0], values[1], date, description, log);
         appointmentPromise.then((id) => {
             showAppointments(); 
             searchAppointmentsOfUser(userId, role);
@@ -66,19 +65,17 @@ function editAppointment(id, userId, role) {
         let $p4 = _makeTextElement("p", 'Doctor : ' + appointment.doctor); 
         let $p5 = _makeTextElement("p", 'Description : ' + appointment.description);
         let $p6 = _makeTextarea('appointmentdetails-log', 'Log', appointment.log);
-        let $p7 = _makeTextElement("p", 'Issues : ' + appointment.issues);  //TODO select issues
         let onClick = function() { saveChangesToAppointment(id); showAppointments(); searchAppointmentsOfUser(userId, role) }; //TODO
         let $backButton = _makeClickableButton("Save", onClick);
         let children = [$p1, $p2, $p3, $p4, $p5];
         if (role === "patient") {
             children = children.concat([$backButton]);
         } else if (role === "doctor") {
-            children = children.concat([$p6, $p7, $backButton]);
+            children = children.concat([$p6, $backButton]);
         } else {
             children = children.concat([$backButton]);
         }
         _setChildren($appointmentInfo, children);
-        //TODO show issues
     });
 }
 
@@ -99,19 +96,17 @@ function viewAppointment(id, userId, role) {
         let $p4 = _makeTextElement("p", 'Doctor : ' + appointment.doctor); 
         let $p5 = _makeTextElement("p", 'Description : ' + appointment.description);
         let $p6 = _makeTextElement("p", 'Log : ' + appointment.log);
-        let $p7 = _makeTextElement("p", 'Issues : ' + appointment.issues);  //TODO display issues
         let onClick = function() { showAppointments(); searchAppointmentsOfUser(userId, role) };
         let $backButton = _makeClickableButton("Back to appointments", onClick);
         let children = [$p1, $p2, $p3, $p4, $p5];
         if (role === "patient") {
             children = children.concat([$backButton]);
         } else if (role === "doctor") {
-            children = children.concat([$p6, $p7, $backButton]);
+            children = children.concat([$p6, $backButton]);
         } else {
             children = children.concat([$backButton]);
         }
         _setChildren($appointmentInfo, children);
-        //TODO show issues
     });
 }
 

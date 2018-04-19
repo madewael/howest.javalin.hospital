@@ -31,7 +31,7 @@
             
             <div class="col-sm-8" id="patients" visibility="visible">
                 <div id="patient-search" visibility="hidden">
-                    <input type="text" class="form-control" placeholder="Search patient" onkeyup="showPatients()" id="search-patient-name">
+                    <input type="text" class="form-control" placeholder="Search patient" onkeyup="showPatients('doctor')" id="search-patient-name">
                     <ul class="list-group" id="patient-search-list">
                     </ul>
                 </div>
@@ -93,7 +93,7 @@
                                 <div class="modal-dialog" role="document">
                                   <div class="modal-content">
                                     <div class="modal-header">
-                                      <h5 class="modal-title" id="search-patients-modal">Search patients</h5>
+                                      <h5 class="modal-title">Search patients</h5>
                                       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
                                       </button>
@@ -133,6 +133,7 @@
     <script src="./assets/lib/bootstrap-datetimepicker.min.js"></script>
     <script src='./assets/js/proxy.js'></script>
     <script src='./assets/js/utils.js'></script>
+    <script src='./assets/js/patients.js'></script>
     <script src='./assets/js/user_profile.js'></script>
     <script src='./assets/js/appointments.js'></script>
     <script src='./assets/js/search.js'></script>

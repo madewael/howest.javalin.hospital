@@ -67,7 +67,7 @@ function filterPatients() {
 }
 
 
-function showPatients() {
+function showPatients(role) {
     let $patientsList = document.getElementById("patient-search-list");
     _clearElement($patientsList);
     let name = document.getElementById("search-patient-name").value;
@@ -83,7 +83,11 @@ function showPatients() {
                     $search.style.visibility = 'visible';
                     $details.style.visibility = 'hidden';
                 }
-                showUserDetails(patient.id, 'patient', $details, onClickBackButton);
+                if (role === 'doctor') { 
+                    editPatient(patient.id);
+                } else {
+                    showUserDetails(patient.id, 'patient', $details, onClickBackButton);
+                }
              }
             let $li = _makeClickableListGroupItem(patient.name, onClick);
             _appendChildren($patientsList, [$li]);
